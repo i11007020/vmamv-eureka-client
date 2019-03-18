@@ -1,12 +1,11 @@
 package com.example.scsaeureka.mgp.registry.client;
 
-import com.example.scsaeureka.mgp.registry.client.bean.Application;
+import com.example.scsaeureka.mgp.registry.client.bean.MgpApplication;
 import com.example.scsaeureka.mgp.registry.client.bean.MgpInstance;
 import com.example.scsaeureka.mgp.registry.client.bean.RegisterInfo;
 import com.google.gson.Gson;
 import com.netflix.appinfo.InstanceInfo;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,16 +19,12 @@ import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRegis
 import org.springframework.cloud.netflix.eureka.server.event.EurekaServerStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
-import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Register {
 
@@ -94,8 +89,8 @@ public class Register {
             ArrayList<MgpInstance> instances = new ArrayList<>();
             MgpInstance instance = new MgpInstance(hostName, appName, ipAddr, port);
             instances.add(instance);
-            ArrayList<Application> applications = new ArrayList<>();
-            Application application = new Application(scsName, appName, version, instances);
+            ArrayList<MgpApplication> applications = new ArrayList<>();
+            MgpApplication application = new MgpApplication(scsName, appName, version, instances);
             applications.add(application);
             RegisterInfo registerInfo = new RegisterInfo(applications);
             String json = gson.toJson(registerInfo);
