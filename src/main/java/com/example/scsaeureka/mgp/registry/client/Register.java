@@ -36,8 +36,8 @@ public class Register {
     private Environment env;
     @Value("${mgp.server.url}")
     private String mgpServerUrl;
-    @Value("${mgp.scs.name}")
-    private String scsName;
+    @Value("${mgp.system.name}")
+    private String systemName;
     @Value("${spring.application.name}")
     private String appName;
     @Value("${info.version}")
@@ -60,7 +60,7 @@ public class Register {
     public void init() {
         ArrayList<String> properties = new ArrayList<>();
         properties.add(mgpServerUrl);
-        properties.add(scsName);
+        properties.add(systemName);
         properties.add(appName);
         properties.add(version);
         properties.add(port + "");
@@ -73,9 +73,9 @@ public class Register {
             }
         }
 
-        scsName = scsName.toUpperCase();
+        systemName = systemName.toUpperCase();
         appName = appName.toUpperCase();
-        appId = scsName + ":" + appName + ":" + version;
+        appId = systemName + ":" + appName + ":" + version;
         instanceId = hostName + ":" + appName + ":" + port;
     }
 
@@ -90,7 +90,7 @@ public class Register {
             MgpInstance instance = new MgpInstance(hostName, appName, ipAddr, port);
             instances.add(instance);
             ArrayList<MgpApplication> applications = new ArrayList<>();
-            MgpApplication application = new MgpApplication(scsName, appName, version, instances);
+            MgpApplication application = new MgpApplication(systemName, appName, version, instances);
             applications.add(application);
             RegisterInfo registerInfo = new RegisterInfo(applications);
             String json = gson.toJson(registerInfo);
@@ -131,9 +131,9 @@ public class Register {
 
     /*
     public void refreshAppList() {
-        String scsName = env.getProperty("mgp.scs.name");
+        String systemName = env.getProperty("mgp.scs.name");
         String appName = env.getProperty("spring.application.name");
-        String serviceRegistryId = scsName + ":" + appName;
+        String serviceRegistryId = systemName + ":" + appName;
         String url = env.getProperty("mgp.registry.url") + "/registry/refreshAppList/" + serviceRegistryId;
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
