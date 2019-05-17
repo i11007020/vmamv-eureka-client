@@ -1,10 +1,10 @@
-package com.example.scsaeureka.mgp.registry.client;
+package com.soselab.vmamveurekaclient.service;
 
-import com.example.scsaeureka.mgp.registry.client.bean.MgpApplication;
-import com.example.scsaeureka.mgp.registry.client.bean.MgpInstance;
-import com.example.scsaeureka.mgp.registry.client.bean.RegisterInfo;
 import com.google.gson.Gson;
 import com.netflix.appinfo.InstanceInfo;
+import com.soselab.vmamveurekaclient.bean.MgpApplication;
+import com.soselab.vmamveurekaclient.bean.MgpInstance;
+import com.soselab.vmamveurekaclient.bean.RegisterInfo;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -34,9 +34,9 @@ public class Register {
 
     @Autowired
     private Environment env;
-    @Value("${mgp.server.url}")
-    private String mgpServerUrl;
-    @Value("${mgp.system.name}")
+    @Value("${vmamv.server.url}")
+    private String vmamvServerUrl;
+    @Value("${vmamv.system.name}")
     private String systemName;
     @Value("${spring.application.name}")
     private String appName;
@@ -59,7 +59,7 @@ public class Register {
     @PostConstruct
     public void init() {
         ArrayList<String> properties = new ArrayList<>();
-        properties.add(mgpServerUrl);
+        properties.add(vmamvServerUrl);
         properties.add(systemName);
         properties.add(appName);
         properties.add(version);
@@ -68,7 +68,7 @@ public class Register {
         properties.add(instanceId);
         for (String property: properties) {
             if (property == null || property.length() == 0) {
-                logger.info("Property miss, can't register to MGP system");
+                logger.info("Property miss, can't register to VMAMV system");
                 break;
             }
         }
@@ -85,7 +85,7 @@ public class Register {
         // Post service info to MGP registry
         try {
             CloseableHttpClient client = HttpClients.createDefault();
-            HttpPost httpPost = new HttpPost(mgpServerUrl + registerPath);
+            HttpPost httpPost = new HttpPost(vmamvServerUrl + registerPath);
             ArrayList<MgpInstance> instances = new ArrayList<>();
             MgpInstance instance = new MgpInstance(hostName, appName, ipAddr, port);
             instances.add(instance);
@@ -145,7 +145,7 @@ public class Register {
 
     @PreDestroy
     public void unregisterOnAppShutdown() {
-        restTemplate.delete(mgpServerUrl + unregisterPath + instanceId);
+        restTemplate.delete(vmamvServerUrl + unregisterPath + instanceId);
     }
 
 }

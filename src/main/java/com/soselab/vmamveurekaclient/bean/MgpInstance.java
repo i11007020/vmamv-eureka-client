@@ -1,4 +1,4 @@
-package com.example.scsaeureka.mgp.registry.client.bean;
+package com.soselab.vmamveurekaclient.bean;
 
 public class MgpInstance {
 

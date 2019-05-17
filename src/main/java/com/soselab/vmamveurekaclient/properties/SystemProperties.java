@@ -1,10 +1,10 @@
-package com.example.scsaeureka.mgp.registry.client.properties;
+package com.soselab.vmamveurekaclient.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "mgp.system")
+@ConfigurationProperties(prefix = "vmamv.system")
 public class SystemProperties {
 
     private String name;

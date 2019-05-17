@@ -24,11 +24,3 @@
 /nbdist/
 /.nb-gradle/
 
-.mvn/
-mvnw
-mvnw.cmd
-pom.xml
-/src/main/resources/
-/src/main/java/com/example/scsaeureka/*.java
-/src/test/
-
