@@ -31,7 +31,12 @@ public class Register {
     private static final Logger logger = LoggerFactory.getLogger(Register.class);
     private static final String registerPath = "/registry/register/eureka";
     private static final String unregisterPath = "/registry/unregister/";
-
+    
+    
+    /**
+     * @Value : Injecting values into parameters
+     * */
+    
     @Autowired
     private Environment env;
     @Value("${vmamv.server.url}")
@@ -56,6 +61,11 @@ public class Register {
     private Gson gson = new Gson();
     private RestTemplate restTemplate = new RestTemplate();
 
+    
+    
+    /**
+     * This tag is then used after the Register service(this class) is called.
+     * */
     @PostConstruct
     public void init() {
         ArrayList<String> properties = new ArrayList<>();
@@ -78,7 +88,10 @@ public class Register {
         appId = systemName + ":" + appName + ":" + version;
         instanceId = hostName + ":" + appName + ":" + port;
     }
-
+    
+    /**
+     * @Event : Eureka Server start
+     * */
     @EventListener
     // Listen to ContextRefreshedEvent is another approach
     public void registerOnEurekaServerStarted(EurekaServerStartedEvent event) {
@@ -108,7 +121,10 @@ public class Register {
         }
         //refreshAppList();
     }
-
+    
+    /**
+     * @Event : When a service register to Eureka server
+     * */
     @EventListener
     public void refreshAppListOnRegisterApp(EurekaInstanceRegisteredEvent event) {
         if (!event.isReplication()) {
@@ -119,7 +135,10 @@ public class Register {
             logger.info("register(host name): " + info.getHostName());
         }
     }
-
+    
+    /**
+     * @Event : When a service unregister to Eureka server
+     * */
     @EventListener
     public void refreshAppListOnUnregisterApp(EurekaInstanceCanceledEvent event) {
         if (!event.isReplication()) {
