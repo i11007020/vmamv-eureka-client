@@ -12,6 +12,5 @@ public class VMAMVEurekaClientApplication {
 		SpringApplication.run(VMAMVEurekaClientApplication.class, args);
 	}
 
-
 }
 
